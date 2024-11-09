@@ -98,7 +98,7 @@ class Hall(Star_Cinema):
     def view_show_list(self):
         print("Currently Running:")
         for show in self.__show_list:
-            print(f'Id: {show[0]} Moive: {show[1]}')
+            print(f'Id:{show[0]} Moive:{show[1]} Time:{show[2]}')
 
     def available_seats(self, id):
         id = int(id)
@@ -106,18 +106,15 @@ class Hall(Star_Cinema):
             print(f"Hall No {id} not exist!")
             return
 
-        availabele = []
-        for i in range(1, self.rows):
-            for j in range(1, self.cols):
-                if self._seats[id][i][j] == 0:
-                    availabele.append((i,j))
-
-        if len(availabele) == 0:
-            print(f"No available seats of id {id}")     
-            return
-        
         print("Available seats:")
-        print(availabele)
+        for i in self._seats[id]:
+            print(i)
+
+        # if len(availabele) == 0:
+        #     print(f"No available seats of id {id}")     
+        #     return
+        
+        # print(availabele)
 
     def __str__(self):
         return f'Hall No:{self.__hall_no} Rows:{self.rows} Cols:{self.cols}'
@@ -143,28 +140,25 @@ while True:
     print("\t3. Book a seats")
     print("\t4. Quit")
 
-    cmd = int(input("\tType Here: "))
+    cmd = int(input("Select Option: "))
 
     if cmd == 1:
+        print("-----------------------------")
         my_hall.view_show_list()
+        print("-----------------------------")
     elif cmd == 2:
         id = input("\nType show id: ")
+        print("-----------------------------")
         my_hall.available_seats(id)
+        print("-----------------------------")
     elif cmd == 3:
         id = input("\nType show id: ")
         choosen_seats = []
-        while True:
-            print("\t1. Continue Booking")
-            print("\t2. Confirm Booking")
 
-            cmd2 = int(input("\tType Here: "))
+        row = int(input("\t\tType row: "))
+        col = int(input("\t\tType col: "))
+        choosen_seats.append((row, col))            
 
-            if cmd2 == 1:
-                row = int(input("\t\tType row: "))
-                col = int(input("\t\tType col: "))
-                choosen_seats.append((row, col))
-            else:
-                break
         my_hall.book_seat(id, choosen_seats)
 
     else: 
